@@ -5,9 +5,57 @@
 	<link rel="stylesheet" href="Estilos.css">
 </head>
 <body>
+	<script>
+		window.fbAsyncInit = function() {
+    			FB.init({
+      				appId      : '2243180632722299',
+      				cookie     : true,
+      				xfbml      : true,
+      				version    : 'v21.0'
+    			});
+      
+    			FB.AppEvents.logPageView();   
+      
+  		};
+
+  		(function(d, s, id){
+     			var js, fjs = d.getElementsByTagName(s)[0];
+     			if (d.getElementById(id)) {return;}
+     			js = d.createElement(s); js.id = id;
+     			js.src = "https://connect.facebook.net/en_US/sdk.js";
+     			fjs.parentNode.insertBefore(js, fjs);
+   		}(document, 'script', 'facebook-jssdk'));
+		
+		FB.getLoginStatus(function(response) {
+   			statusChangeCallback(response);
+		});
+
+		{
+	    		status: 'connected',
+    			authResponse: {
+        		accessToken: '...',
+        		expiresIn:'...',
+        		signedRequest:'...',
+        		userID:'...'
+    		}
+		<fb:login-button 
+ 		scope="public_profile,email"
+  		onlogin="checkLoginState();">
+		</fb:login-button>
+		
+		function checkLoginState() {
+  		FB.getLoginStatus(function(response) {
+    			statusChangeCallback(response);
+  			});
+		}
+	</script>
+	<div id="fb-root"></div>
+			<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v21.0&appId=2243180632722299"></script>
+	
 	<div class="encabezado">
 		<h1>Implementación de API de Facebook</h1>
 	</div>
+
 	<div class="integrantes">
 			<p> 
 				<b> Miembros: </b>
@@ -24,7 +72,10 @@
 	<div class="contenido">
 			<h1> API Facebook: Login </h1>
 			<h2> Descripción </h2>
-			<p> Este proyecto tiene la finalidad de dar a conocer cómo funciona una API, en este caso es el de Facebook </p>
+			<p> Este proyecto tiene la finalidad de dar a conocer cómo funciona una API, en este caso es el de Facebook</p>
+			<div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-	as="false">
+			</div>
+
 	</div>
 
 	<footer>
