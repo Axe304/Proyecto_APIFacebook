@@ -40,19 +40,19 @@
         }
 
         function getFbUserData() {
-            FB.api('/me', {local: 'en_US', fields: 'id, first_name, last_name, email,link, gender, picture'},
+            FB.api('/me', {local: 'en_US', fields: 'id, first_name, last_name, email, link, gender, locale, picture'},
                 function(response){
                     document.getElementById('fbLink').setAttribute("onclick", "fbLogout()");
                     document.getElementById('fbLink').innerHTML='Salir de Facebook';
-                    document.getElementById('status').innerHTML='<p>Gracias por iniciar sesión, '+response.firt_name+'!</p>'; 
-                    document.getElementById('userData').innerHTML='<h2>Detalles del perfil de Facebook</h2><p><img src="'+response.picture.data.url+'"/></p><p><b>FB Id:</b>'+response.id+'</p><p><b>Nombre:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Genero:</b> '+response.gender+'</p><p><b>FB Perfil:</b><a target="_blank" href="'+response.link+'">click para ver perfil</a></p>';
+                    document.getElementById('status').innerHTML='<p>Gracias por iniciar sesión, '+response.first_name+'!</p>'; 
+                    document.getElementById('userData').innerHTML='<h2>Detalles del perfil de Facebook</h2><p><img src="'+response.picture.data.url+'"/></p><p><b>FB Id:</b> '+response.id+'</p><p><b>Nombre:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Genero:</b> '+response.gender+'</p><p><b>FB Perfil:</b> <a target="_blank" href="'+response.link+'">click para ver perfil</a></p>';
                 });
             }
 
         function fbLogout(){
             FB.logout(function() {
                 document.getElementById('fbLink').setAttribute("onclick", "fbLogin()");
-                document.getElementById('fbLink').innerHTML='<img src="fb-login-btn.png"/>';
+                document.getElementById('fbLink').innerHTML='<img src="fb-login-btn.png" width="300" height="100" alt="Botón de inicio de sesión con Facebook"/>';
                 document.getElementById('userData').innerHTML='';
                 document.getElementById('status').innerHTML='<p>Has salido exitosamente de tu sesión de Facebook.</p>';
             });
