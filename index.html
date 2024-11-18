@@ -3,58 +3,63 @@
 <head>
 	<title>	Proyecto </title>
 	<link  rel="stylesheet" href="Estilos.css">
-</head>
-<body>
+    <script src="js/jquery.min.js"></script>
     <script>
-        function statusChangeCallback(response) {
-          console.log('statusChangeCallback');
-          console.log(response);
-          if (response.status === 'connected') {
-            testAPI();
-          } else {
-            document.getElementById('status').innerHTML = 'Por favor, inicia sesión ' +
-              'dentro de esta página.';
-          }
-        }
-	    
-        function checkLoginState() {
-          FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-          });
-        }
-	    
         window.fbAsyncInit = function() {
-        	FB.init({
-          		appId      : '2243180632722299',
-          		cookie     : true,  // enable cookies to allow the server to access 
-          		xfbml      : true,  // parse social plugins on this page
-          		version    : 'v21.0' // Specify the Graph API version to use
-        	});
-       		FB.getLoginStatus(function(response) {
-        		statusChangeCallback(response);
-        	});
-		
-		FB.logout(function(response) {
-        	});
-        };
-      
+        FB.init({
+          appId      : '2243180632722299',
+          cookie     : true,  
+          xfbml      : true,  
+          version    : 'v21.0' 
+        });
+
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') { 
+                getFbUserData();
+            }
+        });
+
         (function(d, s, id) {
-        	var js, fjs = d.getElementsByTagName(s)[0];
-          	if (d.getElementById(id)) return;
-          	js = d.createElement(s); js.id = id;
-          	js.src = "https://connect.facebook.net/en_US/sdk.js";
-          	fjs.parentNode.insertBefore(js, fjs);
-        	}(document, 'script', 'facebook-jssdk'));
-        
-	function testAPI() {
-        	console.log('Bienvenido!  Estamos obteniendo tu information.... ');
-         	 FB.api('/me', function(response) {
-            		console.log('Inicio de sesión exitoso: ' + response.name);
-            		document.getElementById('status').innerHTML =
-              		'Gracias por iniciar sesión, ' + response.name + '!';
-        	});
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "https://connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function fbLogin() {
+            FB.login(function(response) {
+                if(response.authResponse) {
+                    getFbUserData();
+                }
+                else {
+                    document.getElementById('status').innerHTML='El usuario cancelo el registro o no está totalmente autorizado.';
+                }
+            }, {scope: 'email'});
+        }
+
+        function getFbUserData() {
+            FB.api('/me', {local: 'en_us', fields: 'id, first_name, last_name, email,link, gender, picture'},
+                function(response){
+                    document.getElementById('fbLink').setAttribute("onclick", "fbLogout()");
+                    document.getElementById('fbLink').innerHTML='Salir de Facebook';
+                    document.getElementById('status').innerHTML='<p>Gracias por iniciar sesión, '+response.firt_name+'!</p>'; 
+                    document.getElementById('userData').innerHTML='<h2>Detalles del perfil de Facebook</h2><p><img src="'+response.picture.data.url+'"/></p><p><b>FB Id:</b>'+response.id+'</p><p><b>Nombre:</b> '+response.firt_name+' '+response.last_name+'</p><p><b>Email:<b> '+response.email+'</p><p><b>Genero:</b> '+response.gender+'</p><p><b>FB Perfil:</b><a target="_blank" href="'+response.link+'">click para ver perfil</a></p>';
+                }
+            )};
+        }
+
+        function fbLogout(){
+            FB.logout(function() {
+                document.getElementById('fbLink').setAttribute("onclick", "fbLogin()");
+                document.getElementById('fbLink').innerHTML='<img src="images/fb-login-btn.png"/>';
+                document.getElementById('userData').innerHTML='';
+                document.getElementById('status').innerHTML='<p>Has salido exitosamente de tu sesión de Facebook.</p>';
+            });
         }
     </script>
+</head>
+<body>
 	<div class="encabezado">
 		<h1>Implementación de API de Facebook</h1>
 	</div>
@@ -73,14 +78,13 @@
 			</ul>
 	</div>
 	<div class="contenido">
-			<h1> API Facebook: Login </h1>
-			<h2> Descripción </h2>
-			<p> Este proyecto tiene la finalidad de dar a conocer cómo funciona una API, en este caso es el de Facebook</p>
-           		<div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="false">
-            		</div>
-            		<div id="fb-root"></div>
-            		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v21.0&appId=2243180632722299">
-            		</script>
+		<h1> API Facebook: Login </h1>
+		<h2> Descripción </h2>
+		<p> Este proyecto tiene la finalidad de dar a conocer cómo funciona una API, en este caso es el de Facebook</p>
+        <div class="fb-box"></div>
+        <div id="status"></div>
+        <a href="javascript:void(0);" id="fbLink" onclick="fbLogin();"><img src="images/fb-login-btn.png"/></a>
+        <div class="ac-data" id="userData"></div>
 	</div>
 
 	<footer>
