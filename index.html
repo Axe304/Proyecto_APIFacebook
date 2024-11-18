@@ -5,6 +5,53 @@
 	<link  rel="stylesheet" href="Estilos.css">
 </head>
 <body>
+    <script>
+        function statusChangeCallback(response) {
+          console.log('statusChangeCallback');
+          console.log(response);
+          if (response.status === 'connected') {
+            testAPI();
+          } else {
+            document.getElementById('status').innerHTML = 'Please log ' +
+              'into this app.';
+          }
+        }
+	    
+        function checkLoginState() {
+          FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+          });
+        }
+	    
+        window.fbAsyncInit = function() {
+        	FB.init({
+          		appId      : '2243180632722299',
+          		cookie     : true,  // enable cookies to allow the server to access 
+          		xfbml      : true,  // parse social plugins on this page
+          		version    : 'v21.0' // Specify the Graph API version to use
+        	});
+       		FB.getLoginStatus(function(response) {
+        		statusChangeCallback(response);
+        	});
+        };
+      
+        (function(d, s, id) {
+        	var js, fjs = d.getElementsByTagName(s)[0];
+          	if (d.getElementById(id)) return;
+          	js = d.createElement(s); js.id = id;
+          	js.src = "https://connect.facebook.net/en_US/sdk.js";
+          	fjs.parentNode.insertBefore(js, fjs);
+        	}(document, 'script', 'facebook-jssdk'));
+        
+	function testAPI() {
+        	console.log('Welcome!  Fetching your information.... ');
+         	 FB.api('/me', function(response) {
+            		console.log('Successful login for: ' + response.name);
+            		document.getElementById('status').innerHTML =
+              		'Thanks for logging in, ' + response.name + '!';
+        	});
+        }
+    </script>
 	<div class="encabezado">
 		<h1>Implementación de API de Facebook</h1>
 	</div>
@@ -26,47 +73,10 @@
 			<h1> API Facebook: Login </h1>
 			<h2> Descripción </h2>
 			<p> Este proyecto tiene la finalidad de dar a conocer cómo funciona una API, en este caso es el de Facebook</p>
-			<div id="fb-root"></div>
-			<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v21.0&appId=2243180632722299">
-			</script>
-			<div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="false">
-			</div>
-			
-			 <script>
-  
-        <!-- Add the Facebook SDK for Javascript -->
-  
-        (function(d, s, id){
-                              var js, fjs = d.getElementsByTagName(s)[0];
-                              if (d.getElementById(id)) {return;}
-                              js = d.createElement(s); js.id = id;
-                              js.src = "https://connect.facebook.net/en_US/sdk.js";
-                              fjs.parentNode.insertBefore(js, fjs);
-                            }(document, 'script', 'facebook-jssdk')
-        );
-
-
-        window.fbAsyncInit = function() {
-            <!-- Initialize the SDK with your app and the Graph API version for your app -->
-            FB.init({
-                      appId            : '{your-facebook-app-id}',
-                      xfbml            : true,
-                      version          : '{the-graph-api-version-for-your-app}'
-                    });
-            <!-- If you are logged in, automatically get your name and email adress, your public profile information -->
-            FB.login(function(response) {
-                      if (response.authResponse) {
-                           console.log('Welcome!  Fetching your information.... ');
-                           FB.api('/me', {fields: 'name, email'}, function(response) {
-                               document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
-                           });
-                      } else { 
-                           <!-- If you are not logged in, the login dialog will open for you to login asking for permission to get your public profile and email -->
-                           console.log('User cancelled login or did not fully authorize.'); }
-            });
-        };
-
-     	 </script> 
+            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+            </fb:login-button>
+            <div id="status">
+            </div>
 	</div>
 
 	<footer>
