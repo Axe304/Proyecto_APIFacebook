@@ -12,8 +12,8 @@
           if (response.status === 'connected') {
             testAPI();
           } else {
-            document.getElementById('status').innerHTML = 'Please log ' +
-              'into this app.';
+            document.getElementById('status').innerHTML = 'Por favor, inicia sesión ' +
+              'dentro de esta página.';
           }
         }
 	    
@@ -44,11 +44,11 @@
         	}(document, 'script', 'facebook-jssdk'));
         
 	function testAPI() {
-        	console.log('Welcome!  Fetching your information.... ');
+        	console.log('Bienvenido!  Estamos obteniendo tu information.... ');
          	 FB.api('/me', function(response) {
-            		console.log('Successful login for: ' + response.name);
+            		console.log('Inicio de sesión exitoso: ' + response.name);
             		document.getElementById('status').innerHTML =
-              		'Thanks for logging in, ' + response.name + '!';
+              		'Gracias por iniciar sesión, ' + response.name + '!';
         	});
         }
     </script>
