@@ -28,31 +28,12 @@
   	background-color: #f1f1f1;
 }
 
-section::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 footer {
   	background-color: RGB(0, 0, 80);
 	padding: 50px;
  	text-align: center;
 	font-size: 30px;
  	color: white;
-}
-
-strong, img {
-	display: block;
-}
-
-img {
-	margin: 0 auto;
-	border-radius: 10px;
-}
-
-#logout {
-	margin-top: 10px ;
 }
 
 @media (max-width: 600px) {
