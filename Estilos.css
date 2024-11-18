@@ -41,8 +41,23 @@ footer {
 	font-size: 30px;
  	color: white;
 }
+
+strong, img {
+	display: block;
+}
+
+img {
+	margin: 0 auto;
+	border-radius: 10px;
+}
+
+#logout {
+	margin-top: 10px ;
+}
+
 @media (max-width: 600px) {
-  nav, article {
-    width: 100%;
-    height: auto;
-  }
+	nav, article {
+	  width: 100%;
+	  height: auto;
+	}
+}
