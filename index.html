@@ -6,18 +6,19 @@
 	<link  rel="stylesheet" href="Estilos.css">
     <script>
         window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '2243180632722299',
-          cookie     : true,  
-          xfbml      : true,  
-          version    : 'v21.0' 
-        });
+            FB.init({
+                appId      : '2243180632722299',
+                cookie     : true,  
+                xfbml      : true,  
+                version    : 'v21.0' 
+            });
 
-        FB.getLoginStatus(function(response) {
-            if (response.status === 'connected') { 
-                getFbUserData();
-            }
-        });
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') { 
+                  getFbUserData();
+                }
+            });
+        };
 
         (function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -45,9 +46,8 @@
                     document.getElementById('fbLink').innerHTML='Salir de Facebook';
                     document.getElementById('status').innerHTML='<p>Gracias por iniciar sesión, '+response.firt_name+'!</p>'; 
                     document.getElementById('userData').innerHTML='<h2>Detalles del perfil de Facebook</h2><p><img src="'+response.picture.data.url+'"/></p><p><b>FB Id:</b>'+response.id+'</p><p><b>Nombre:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Genero:</b> '+response.gender+'</p><p><b>FB Perfil:</b><a target="_blank" href="'+response.link+'">click para ver perfil</a></p>';
-                }
-            )};
-        }
+                });
+            }
 
         function fbLogout(){
             FB.logout(function() {
