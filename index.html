@@ -40,7 +40,7 @@
         }
 
         function getFbUserData() {
-            FB.api('/me', {local: 'en_US', fields: 'id, first_name, last_name, email, link, gender, locale, picture'},
+            FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture'},
                 function(response){
                     document.getElementById('fbLink').setAttribute("onclick", "fbLogout()");
                     document.getElementById('fbLink').innerHTML='Salir de Facebook';
