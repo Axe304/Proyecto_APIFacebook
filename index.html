@@ -73,10 +73,11 @@
 			<h1> API Facebook: Login </h1>
 			<h2> Descripción </h2>
 			<p> Este proyecto tiene la finalidad de dar a conocer cómo funciona una API, en este caso es el de Facebook</p>
-            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-            </fb:login-button>
-            <div id="status">
-            </div>
+           		<div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="false">
+            		</div>
+            		<div id="fb-root"></div>
+            		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v21.0&appId=2243180632722299">
+            		</script>
 	</div>
 
 	<footer>
